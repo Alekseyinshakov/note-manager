@@ -9,14 +9,18 @@ body{
 }
 
 .header{
-    height: 60px;
+    min-height: 60px;
 
     background-color: #c8ffaf;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     h1{
         font-size: 30px;
         text-align: center;
-        line-height: 60px;
+
+
+        /*line-height: 60px;*/
     }
 }
 .content{
@@ -29,11 +33,14 @@ body{
 
 }
 footer{
+    font-size: 0.8em;
     background-color: #c8ffaf;
-    height: 60px;
+    min-height: 60px;
+    padding: 5px 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .App{
@@ -47,16 +54,20 @@ footer{
 .container{
     max-width: 900px;
     margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .nav_list{
     display: flex;
-    gap: 20px;
+    gap: 12px;
     margin: 15px 0;
+    flex-wrap: wrap;
 }
 
 
 .btn{
+    color: black;
     background-color: #ffd663;
     padding: 5px 10px;
     display: inline-block;

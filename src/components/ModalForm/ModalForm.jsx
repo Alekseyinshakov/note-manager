@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import s from './ModalForm.module.css'
-import {Form} from "react-router-dom";
 
 const ModalForm = ({setIsModalForm, addNote, prevData, setPrevData}) => {
 

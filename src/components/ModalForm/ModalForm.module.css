@@ -32,6 +32,9 @@
         button {
             margin-top: 10px;
         }
+        @media (max-width: 520px) {
+            width: 95%
+        }
     }
 }
 

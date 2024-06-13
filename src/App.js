@@ -31,7 +31,19 @@ function App() {
     function formActive() {
         setIsModalForm(true)
     }
+    function empty() {
+        setRemotedNotes([])
+    }
+    function restore(title, body, id) {
+        const newDelArr = remotedNotes.filter(n => {
+            return id !== n.id
+        })
+        setRemotedNotes(newDelArr);
 
+        const newArr = [{title, body, id}, ...notes]
+        newArr.sort((a, b) => b.id - a.id);
+        setNotes(newArr)
+    }
     function addNote(newNote, id) {
         if(id){
 
@@ -80,7 +92,9 @@ function App() {
     return (
         <div className="App">
             <header className="header">
-                <h1>Простой менеджер заметок</h1>
+                <div className="container">
+                    <h1>Простой менеджер заметок</h1>
+                </div>
             </header>
             <nav className="navbar">
                 <div className="container">
@@ -102,13 +116,16 @@ function App() {
                 <div className="container">
                     <Routes>
                         <Route path="/main" element={<Main notes={notes} deleteNote={deleteNote} changeNote={changeNote}/>}/>
-                        <Route path="/remote" element={<Remote remotedNotes={remotedNotes} />}/>
+                        <Route path="/remote" element={<Remote remotedNotes={remotedNotes} restore={restore} empty={empty}/>}/>
                         <Route path="/" element={<Main notes={notes} deleteNote={deleteNote} changeNote={changeNote}/>}/>
                     </Routes>
                 </div>
             </main>
             <footer>
-                Это веб-приложение создано с использованием библиотеки React в качестве учебной практики
+                <div className="container">
+                    Это веб-приложение создано с использованием библиотеки React в качестве учебной практики. Заметки сохраняются в LocalStorage.
+                </div>
+
             </footer>
 
             {isModalForm && <ModalForm prevData={prevData} setPrevData={setPrevData} setIsModalForm={setIsModalForm} addNote={addNote}/>}

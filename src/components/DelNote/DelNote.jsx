@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './DelNote.module.css'
 
-const DelNote = ({title, body, id}) => {
+const DelNote = ({title, body, id, restore}) => {
 
     const date = new Date(id)
 
@@ -20,7 +20,7 @@ const DelNote = ({title, body, id}) => {
             }</div>
 
             <button onClick={() => {
-
+                restore(title, body, id)
             }} className="btn">Восстановить
             </button>
 
