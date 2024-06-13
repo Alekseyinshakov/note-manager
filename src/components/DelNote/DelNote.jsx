@@ -1,7 +1,7 @@
 import React from 'react';
-import s from "./Note.module.css"
+import s from './DelNote.module.css'
 
-const Note = ({title, body, id, deleteNote, changeNote}) => {
+const DelNote = ({title, body, id}) => {
 
     const date = new Date(id)
 
@@ -20,14 +20,12 @@ const Note = ({title, body, id, deleteNote, changeNote}) => {
             }</div>
 
             <button onClick={() => {
-                changeNote(id, title, body)
-            }} className="btn">Изменить</button>
-            <button onClick={() => {
-                deleteNote(id)
-            }} className="btn">Удалить
+
+            }} className="btn">Восстановить
             </button>
+
         </div>
     );
 };
 
-export default Note;
+export default DelNote;

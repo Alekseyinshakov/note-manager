@@ -10,12 +10,21 @@ import ModalForm from "./components/ModalForm/ModalForm";
 
 
 function App() {
+
     let storedNotes = [];
     if (localStorage.getItem('storedNotes')) {
         storedNotes = JSON.parse(localStorage.getItem('storedNotes'));
     }
 
+    let deletedNotes = [];
+    if (localStorage.getItem('deletedNotes')) {
+        deletedNotes = JSON.parse(localStorage.getItem('deletedNotes'));
+    }
+
+
+
     const [notes, setNotes] = useState(storedNotes)
+    const [remotedNotes, setRemotedNotes] = useState(deletedNotes)
     const [isModalForm, setIsModalForm] = useState(false)
 
 
@@ -23,25 +32,49 @@ function App() {
         setIsModalForm(true)
     }
 
-    function addNote(newNote) {
-        setNotes([...notes, {...newNote, id: new Date().getTime()}])
+    function addNote(newNote, id) {
+        if(id){
+
+            const editedNotes = notes.map(note => {
+                if(id === note.id) {
+                    return {...newNote, id}
+                } else {
+                    return note
+                }
+            })
+
+            setNotes(editedNotes);
+            setIsModalForm(false);
+            setPrevData({title: '', body: ''})
+            return;
+        }
+        setNotes([{...newNote, id: new Date().getTime()}, ...notes])
 
         setIsModalForm(false)
     }
 
     function deleteNote(id) {
+        notes.forEach(note => {
+            if (note.id === id) {
+                setRemotedNotes([note, ...remotedNotes]);
+                localStorage.setItem('deletedNotes', JSON.stringify(remotedNotes));
+            }
+        })
         setNotes(notes.filter(note => {
             return note.id != id
         }))
     }
-    function changeNote(id) {
-        console.log('меняем пост' + id)
 
+    const [prevData, setPrevData ] = useState({title: '', body: ''});
+    function changeNote(id, title, body) {
+        setPrevData({id, title, body})
+        setIsModalForm(true)
     }
 
     useEffect(() => {
         localStorage.setItem('storedNotes', JSON.stringify(notes));
-    }, [notes])
+        localStorage.setItem('deletedNotes', JSON.stringify(remotedNotes));
+    }, [notes, remotedNotes])
 
 
     return (
@@ -69,7 +102,7 @@ function App() {
                 <div className="container">
                     <Routes>
                         <Route path="/main" element={<Main notes={notes} deleteNote={deleteNote} changeNote={changeNote}/>}/>
-                        <Route path="/remote" element={<Remote />}/>
+                        <Route path="/remote" element={<Remote remotedNotes={remotedNotes} />}/>
                         <Route path="/" element={<Main notes={notes} deleteNote={deleteNote} changeNote={changeNote}/>}/>
                     </Routes>
                 </div>
@@ -78,7 +111,7 @@ function App() {
                 Это веб-приложение создано с использованием библиотеки React в качестве учебной практики
             </footer>
 
-            {isModalForm && <ModalForm  setIsModalForm={setIsModalForm} addNote={addNote}/>}
+            {isModalForm && <ModalForm prevData={prevData} setPrevData={setPrevData} setIsModalForm={setIsModalForm} addNote={addNote}/>}
 
         </div>
     );
