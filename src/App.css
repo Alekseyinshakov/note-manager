@@ -1,11 +1,12 @@
 body{
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .title{
-    font-weight: 600;
-    font-size: 36px;
+    font-weight: 400;
+    font-size: 32px;
     text-align: center;
+
 }
 
 .header{
