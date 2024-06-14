@@ -5,7 +5,7 @@ import Note from "../Note/Note";
 const Main = ({changeNote, deleteNote, notes }) => {
     return (
         <div>
-
+            <div className="title">Главная</div>
 
             <div>
                 {
